@@ -1,0 +1,12 @@
+
+/* styling for the main center weather area */
+.card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* card size and shape here */
+    margin: 0;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+}
