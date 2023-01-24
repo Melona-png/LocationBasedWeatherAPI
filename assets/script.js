@@ -1,36 +1,36 @@
-let city = {
+// api key from openweather map - used city instead of lat/long return
+
+let weather = {
   apiKey: "07fa7f1f73fff1e778fbccd18241a41d",
-  fetchCity: function () {
-    fetch(
-      "https://api.openweathermap.org/geo/1.0/direct?q=" +
+  fetchWeather: function (city) {
+    return fetch(
+      "https://api.openweathermap.org/data/2.5/weather?q=" +
         city +
-        "&appid=" +
-        appKey
+        "&units=imperial&appid=" +
+        this.apiKey
     )
       .then((response) => response.json())
       .then((data) => console.log(data));
   },
+  displayWeather: function (data) {
+    const { name } = data;
+    const { icon, description } = data.weather[0];
+    const { temp, humidity } = data.main;
+    const { speed } = data.wind;
+    // console.log(name, icon, description, temp, humidity, speed);
+    document.querySelector(".city").innerText = "Weather" + name;
+    document.querySelector(".icon").src =
+      "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+    document.querySelector(".description").innerText = description;
+    document.querySelector(".temp").innerText = temp;
+    document.querySelector(".humidty").innerText = "Humidty:" + humidity + "%";
+    document.querySelector(".wind").innerText = "Wind speed:" + speed + "mp/h";
+  },
+  search: function () {
+    this.fetchWeather(document.querySelector(".search-bar").value);
+  },
 };
 
-let weather = {
-  apiKey: "",
-};
-
-var searchFormEl = document.querySelector("#search-form");
-
-function handleSearchFormSubmit(event) {
-  event.preventDefault();
-
-  var searchInputVal = document.querySelector("#search-input").value;
-
-  if (!searchInputVal) {
-    console.error("You need a search input value!");
-    return;
-  }
-
-  var queryString = "./search-results.html?q=" + searchInputVal;
-
-  location.assign(queryString);
-}
-
-searchFormEl.addEventListener("submit", handleSearchFormSubmit);
+document.querySelector(".search button").addEventListener("click", function () {
+  weather.search();
+});
