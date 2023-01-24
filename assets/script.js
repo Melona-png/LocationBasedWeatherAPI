@@ -10,7 +10,9 @@ let weather = {
         this.apiKey
     )
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        this.displayWeather(data);
+      });
   },
   displayWeather: function (data) {
     const { name } = data;
@@ -18,19 +20,20 @@ let weather = {
     const { temp, humidity } = data.main;
     const { speed } = data.wind;
     // console.log(name, icon, description, temp, humidity, speed);
-    document.querySelector(".city").innerText = "Weather" + name;
+    document.querySelector(".city").innerText = "Weather in " + name;
     document.querySelector(".icon").src =
       "http://openweathermap.org/img/wn/" + icon + "@2x.png";
     document.querySelector(".description").innerText = description;
     document.querySelector(".temp").innerText = temp;
-    document.querySelector(".humidty").innerText = "Humidty:" + humidity + "%";
-    document.querySelector(".wind").innerText = "Wind speed:" + speed + "mp/h";
+    document.querySelector(".humidity").innerText =
+      "Humidty: " + humidity + "%";
+    document.querySelector(".wind").innerText = "Wind speed: " + speed + "mp/h";
   },
   search: function () {
-    this.fetchWeather(document.querySelector(".search-bar").value);
+    this.fetchWeather(document.querySelector(".form-input").value);
   },
 };
 
-document.querySelector(".search button").addEventListener("click", function () {
+document.querySelector(".form button").addEventListener("click", function () {
   weather.search();
 });
