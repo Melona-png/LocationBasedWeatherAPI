@@ -11,9 +11,34 @@ let weather = {
     )
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         this.displayWeather(data);
+        let lon = data.coord.lon;
+        let lat = data.coord.lat;
+        this.fiveDayFetch(lat, lon);
       });
   },
+  fiveDayFetch: function (lat, lon) {
+    return fetch(
+      "https://api.openweathermap.org/data/2.5/forecast?lat=" +
+        lat +
+        "&lon=" +
+        lon +
+        "&units=imperial&appid=" +
+        this.apiKey
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        this.fiveDayRender(data)
+      });
+    //api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid=apiKey
+  },
+
+  fiveDayRender: function (data){
+    //how to list the five day forecast- pick a time of the day and stick with it
+  },
+
   displayWeather: function (data) {
     const { name } = data;
     const { icon, description } = data.weather[0];
@@ -27,13 +52,15 @@ let weather = {
     document.querySelector(".temp").innerText = temp;
     document.querySelector(".humidity").innerText =
       "Humidty: " + humidity + "%";
-    document.querySelector(".wind").innerText = "Wind speed: " + speed + "mp/h";
+    document.querySelector(".wind").innerText =
+      "Wind speed: " + speed + " MP/H";
   },
   search: function () {
     this.fetchWeather(document.querySelector(".form-input").value);
   },
 };
 
-document.querySelector(".form button").addEventListener("click", function () {
+document.querySelector(".btn").addEventListener("click", function (e) {
+  e.preventDefault();
   weather.search();
 });
