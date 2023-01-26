@@ -18,7 +18,6 @@ let weather = {
         this.fiveDayFetch(lat, lon);
       });
   },
-  //function for five day forecast fetch
   fiveDayFetch: function (lat, lon) {
     return fetch(
       "https://api.openweathermap.org/data/2.5/forecast?lat=" +
@@ -30,20 +29,49 @@ let weather = {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         this.fiveDayRender(data);
       });
+    //api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid=apiKey
   },
-  //function to show the forecast
+
   fiveDayRender: function (data) {
     //how to list the five day forecast- pick a time of the day and stick with it
-    
+    console.log(data);
+    const forecastEl = document.querySelector("#forecast");
+    for (let i = 0; i < data.list.length; i++) {
+      let dayData = data.list[i].dt_txt.split(" ")[1];
+
+      if (dayData === "12:00:00") {
+        let temp = data.list[i].main.temp;
+        let humidity = data.list[i].main.humidity;
+        let description = data.list[i].weather[0].description;
+        let wind = data.list[i].wind.speed;
+        const cardDiv = document.createElement("div");
+        const tempEl = document.createElement("p");
+        const humiEl = document.createElement("p");
+        const descEl = document.createElement("p");
+        const windyEl = document.createElement("p");
+        tempEl.textContent = temp + " F";
+        humiEl.textContent = humidity;
+        windyEl.textContent = wind + " MPH";
+        descEl.textContent = description;
+
+        cardDiv.appendChild(tempEl);
+        cardDiv.appendChild(humiEl);
+        cardDiv.appendChild(windyEl);
+        cardDiv.appendChild(descEl);
+        forecastEl.appendChild(cardDiv);
+      }
+    }
   },
+
   displayWeather: function (data) {
     const { name } = data;
     const { icon, description } = data.weather[0];
     const { temp, humidity } = data.main;
     const { speed } = data.wind;
+    // console.log(name, icon, description, temp, humidity, speed);
     document.querySelector(".city").innerText = "Weather in " + name;
     document.querySelector(".icon").src =
       "http://openweathermap.org/img/wn/" + icon + "@2x.png";
