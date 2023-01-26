@@ -10,7 +10,7 @@ The application provides temp, humidity, wind speed, as well as a weather descri
 
 
 
-![A screenshot of the application](/assets/images/forecast.png?raw=true "Screenshot")
+![A screenshot of the application](./assets/images/forecast.png?raw=true "forecast")
 
 
 
