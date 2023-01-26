@@ -15,5 +15,5 @@ The application provides temp, humidity, wind speed, as well as a weather descri
 
 
 
-Link to application: 
+Link to application: https://melona-png.github.io/LocationBasedWeatherAPI/
 
