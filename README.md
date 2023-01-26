@@ -10,7 +10,7 @@ The application provides temp, humidity, wind speed, as well as a weather descri
 
 
 
-![A screenshot of the application](assets/images/forecast.jpg?raw=true "Title")
+![screenshot of the application](https://raw.githubusercontent.com/Melona-png/LocationBasedWeatherAPI/main/assets/forecast.png)
 
 
 
