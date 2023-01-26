@@ -38,7 +38,7 @@ let weather = {
   fiveDayRender: function (data) {
     //how to list the five day forecast- pick a time of the day and stick with it
     console.log(data);
-    const forecastEl = document.querySelector("#forecast");
+    const forecastEl = document.querySelector(".forecast");
     for (let i = 0; i < data.list.length; i++) {
       let dayData = data.list[i].dt_txt.split(" ")[1];
 
@@ -48,29 +48,35 @@ let weather = {
         let description = data.list[i].weather[0].description;
         let wind = data.list[i].wind.speed;
 
+        // weather icon
         const icon = data.list[i].weather[0].icon;
         let iconURL =
           "http://openweathermap.org/img/wn/" + `${icon}` + "@2x.png";
-
+        //displaying data weather
         const iconData = document.createElement("p");
-        const cardDiv = document.createElement("div");
+        let cardDiv = document.createElement("div");
         const tempEl = document.createElement("p");
         const humiEl = document.createElement("p");
         const descEl = document.createElement("p");
         const windyEl = document.createElement("p");
+        // const forecastDiv = document.createElement("div");
 
+        // forecastDiv.innerHTML = "";
+
+        cardDiv.classList.add("yeehaw");
         tempEl.textContent = temp + " F";
-        humiEl.textContent = humidity;
+        humiEl.textContent = humidity + "%";
         windyEl.textContent = wind + " MPH";
         descEl.textContent = description;
         iconData.innerHTML = `<img src = "${iconURL}">`;
 
+        //appending data
         cardDiv.appendChild(iconData);
         cardDiv.appendChild(tempEl);
         cardDiv.appendChild(humiEl);
         cardDiv.appendChild(windyEl);
         cardDiv.appendChild(descEl);
-        forecastEl.appendChild(cardDiv);
+        forecastEl.append(cardDiv);
       }
     }
   },
@@ -81,7 +87,7 @@ let weather = {
     const { temp, humidity } = data.main;
     const { speed } = data.wind;
     // console.log(name, icon, description, temp, humidity, speed);
-    document.querySelector(".city").innerText = "Weather in " + name;
+    document.querySelector(".city").innerText = "Today's Weather: " + name;
     document.querySelector(".icon").src =
       "http://openweathermap.org/img/wn/" + icon + "@2x.png";
     document.querySelector(".description").innerText = description;

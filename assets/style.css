@@ -1,5 +1,34 @@
 .weather {
   border-style: solid;
   border-width: 1px;
-  border-color: black;
+  border-color: rgb(146, 146, 146);
+}
+
+.yeehaw {
+  border: 2px solid rgb(146, 146, 146);
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  width: 200vw;
+  margin: 10px;
+  padding: 10px;
+  justify-content: center;
+}
+
+.yeehaw p {
+  text-align: center;
+}
+
+.forecast {
+  display: flex;
+}
+
+.card {
+  display: flex;
+
+  border-radius: 20px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(146, 146, 146);
+  text-align: center;
 }
