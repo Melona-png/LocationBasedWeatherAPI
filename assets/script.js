@@ -16,6 +16,14 @@ let weather = {
         let lon = data.coord.lon;
         let lat = data.coord.lat;
         this.fiveDayFetch(lat, lon);
+
+        const date = new Date();
+
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+      let currentDate = `${month}-${day}-${year}`;
+      document.getElementById("date").innerHTML = currentDate;
       });
   },
   fiveDayFetch: function (lat, lon) {
