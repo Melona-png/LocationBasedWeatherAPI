@@ -1,5 +1,4 @@
-// api key from openweather map - used city instead of lat/long return
-
+// api key from openweather map
 let weather = {
   apiKey: "07fa7f1f73fff1e778fbccd18241a41d",
   fetchWeather: function (city) {
@@ -40,7 +39,6 @@ let weather = {
         //console.log(data);
         this.fiveDayRender(data);
       });
-    //api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid=apiKey
   },
 
   fiveDayRender: function (data) {
@@ -55,7 +53,6 @@ let weather = {
         let humidity = data.list[i].main.humidity;
         let description = data.list[i].weather[0].description;
         let wind = data.list[i].wind.speed;
-
         // weather icon
         const icon = data.list[i].weather[0].icon;
         let iconURL =
@@ -67,17 +64,13 @@ let weather = {
         const humiEl = document.createElement("p");
         const descEl = document.createElement("p");
         const windyEl = document.createElement("p");
-        // const forecastDiv = document.createElement("div");
-
         // forecastDiv.innerHTML = "";
-
         cardDiv.classList.add("yeehaw");
         tempEl.textContent = temp + " F";
         humiEl.textContent = humidity + "%";
         windyEl.textContent = wind + " MPH";
         descEl.textContent = description;
         iconData.innerHTML = `<img src = "${iconURL}">`;
-
         //appending data
         cardDiv.appendChild(iconData);
         cardDiv.appendChild(tempEl);
@@ -88,7 +81,6 @@ let weather = {
       }
     }
   },
-
   displayWeather: function (data) {
     const { name } = data;
     const { icon, description } = data.weather[0];
