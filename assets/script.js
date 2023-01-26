@@ -47,16 +47,25 @@ let weather = {
         let humidity = data.list[i].main.humidity;
         let description = data.list[i].weather[0].description;
         let wind = data.list[i].wind.speed;
+
+        const icon = data.list[i].weather[0].icon;
+        let iconURL =
+          "http://openweathermap.org/img/wn/" + `${icon}` + "@2x.png";
+
+        const iconData = document.createElement("p");
         const cardDiv = document.createElement("div");
         const tempEl = document.createElement("p");
         const humiEl = document.createElement("p");
         const descEl = document.createElement("p");
         const windyEl = document.createElement("p");
+
         tempEl.textContent = temp + " F";
         humiEl.textContent = humidity;
         windyEl.textContent = wind + " MPH";
         descEl.textContent = description;
+        iconData.innerHTML = `<img src = "${iconURL}">`;
 
+        cardDiv.appendChild(iconData);
         cardDiv.appendChild(tempEl);
         cardDiv.appendChild(humiEl);
         cardDiv.appendChild(windyEl);
