@@ -18,11 +18,11 @@ let weather = {
 
         const date = new Date();
 
-      let day = date.getDate();
-      let month = date.getMonth() + 1;
-      let year = date.getFullYear();
-      let currentDate = `${month}-${day}-${year}`;
-      document.getElementById("date").innerHTML = currentDate;
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+        let currentDate = `${month}-${day}-${year}`;
+        document.getElementById("date").innerHTML = currentDate;
       });
   },
   fiveDayFetch: function (lat, lon) {
@@ -45,6 +45,8 @@ let weather = {
     //how to list the five day forecast- pick a time of the day and stick with it
     console.log(data);
     const forecastEl = document.querySelector(".forecast");
+    //clear the card before rendering more
+    forecastEl.innerHTML = '';
     for (let i = 0; i < data.list.length; i++) {
       let dayData = data.list[i].dt_txt.split(" ")[1];
 
@@ -64,7 +66,6 @@ let weather = {
         const humiEl = document.createElement("p");
         const descEl = document.createElement("p");
         const windyEl = document.createElement("p");
-        // forecastDiv.innerHTML = "";
         cardDiv.classList.add("yeehaw");
         tempEl.textContent = temp + " F";
         humiEl.textContent = humidity + "%";
@@ -86,7 +87,6 @@ let weather = {
     const { icon, description } = data.weather[0];
     const { temp, humidity } = data.main;
     const { speed } = data.wind;
-    // console.log(name, icon, description, temp, humidity, speed);
     document.querySelector(".city").innerText = "Today's Weather: " + name;
     document.querySelector(".icon").src =
       "http://openweathermap.org/img/wn/" + icon + "@2x.png";
@@ -98,7 +98,24 @@ let weather = {
       "Wind speed: " + speed + " MP/H";
   },
   search: function () {
-    this.fetchWeather(document.querySelector(".form-input").value);
+    let form_input = document.querySelector(".form-input");
+    this.fetchWeather(form_input.value);
+    //check if the value already exists
+    if(!Object.keys(localStorage).includes(form_input.value)){
+      //SET LOCALSTORAGE
+      localStorage.setItem(form_input.value, null);
+      //create buttons after search
+      let citybtn = document.createElement("button");
+      citybtn.textContent = form_input.value;
+      citybtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        weather.btnsearch(form_input.value);
+      });
+      document.querySelector("form").append(citybtn);
+    }
+  },
+  btnsearch: function (value) {
+    this.fetchWeather(value);
   },
 };
 
@@ -106,3 +123,18 @@ document.querySelector(".btn").addEventListener("click", function (e) {
   e.preventDefault();
   weather.search();
 });
+
+// initialize existing cities already in localstorage
+let cities = [];
+Object.keys(localStorage).map((key) => {
+  cities.push(key);
+});
+for (let city of cities) {
+  let citybtn = document.createElement("button");
+  citybtn.textContent = city;
+  citybtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    weather.btnsearch(city);
+  });
+  document.querySelector('form').append(citybtn);
+}
